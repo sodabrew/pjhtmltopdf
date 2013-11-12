@@ -78,12 +78,11 @@ switches = [
   [      '--zoom [FLOAT]',                   'Use this zoom factor (default 1)']
 ]
 
-#optparse = require 'phantomjs://coffee-script/lib/coffee-script/optparse.js'
-optparse = require './optparse'
-parser  = new optparse.OptionParser switches, helpBanner
+var optparse = require ':/coffee-script/lib/coffee-script/optparse'
+var parser  = new optparse.OptionParser switches, helpBanner
 
-system = require 'system'
-options = parser.parse system.args.slice 1
+var system = require 'system'
+var options = parser.parse system.args.slice 1
 
 # Arguments
 address = options.arguments[0]
