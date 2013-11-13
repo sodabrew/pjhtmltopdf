@@ -86,10 +86,12 @@ optparse = require ':/coffee-script/lib/coffee-script/optparse'
 parser  = new optparse.OptionParser switches, helpBanner
 
 system = require 'system'
+fs = require 'fs'
 options = parser.parse system.args.slice 1
 
 # Arguments
 address = options.arguments[0]
+
 output = options.arguments[1]
 output = '/dev/stdout' if output is '-'
 
@@ -110,9 +112,12 @@ page.viewportSize = { width: options.width, height: options.height}
 # page.paperSize = { width: size[0], height: size[1], border: '0px' }
 # page.paperSize = { format: system.args[3], orientation: 'portrait', border: '1cm' }
 
-page.open address, (status) ->
-  if status isnt 'success'
-    console.log 'Unable to load the address!'
-    phantom.exit()
-  else
-    window.setTimeout (-> (page.render output, { format: options.format, quality: options.quality }; phantom.exit())), options.javascript_delay
+if address is '-'
+  page.content = fs.read('/dev/stdin')
+else
+  page.open address, (status) ->
+    if status isnt 'success'
+      console.log 'Unable to load the address!'
+      phantom.exit()
+
+window.setTimeout (-> (page.render output, { format: options.format, quality: options.quality }; phantom.exit())), options.javascript_delay
