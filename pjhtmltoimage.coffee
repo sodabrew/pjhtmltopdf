@@ -22,7 +22,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-helpBanner = 'PhantomJS drop-in for wkhtmltopdf and wkhtmltoimage by Aaron Stone'
+helpBanner = '''
+PhantomJS drop-in for wkhtmltopdf and wkhtmltoimage by Aaron Stone
+Usage: pjhtmltoimage [options] URL filename
+'''
+
 switches = [
   ['-h', '--help',            'Display help']
   ['-H', '--extended-help',   'Display more extensive help, detailing less common command switches']
@@ -97,8 +101,7 @@ options.quality ||= 75
 options.javascript_delay ||= 200
 
 if options.help or system.args.length is 1
-  console.log helpBanner
-  console.log 'Usage: pjhtmltoimage [options] URL filename'
+  console.log parser.help()
   phantom.exit 1
 
 page = require('webpage').create()
