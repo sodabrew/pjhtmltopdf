@@ -85,8 +85,8 @@ switches = [
 optparse = require ':/coffee-script/lib/coffee-script/optparse'
 parser  = new optparse.OptionParser switches, helpBanner
 
-system = require 'system'
 fs = require 'fs'
+system = require 'system'
 options = parser.parse system.args.slice 1
 
 # Arguments
@@ -96,11 +96,11 @@ output = options.arguments[1]
 output = '/dev/stdout' if output is '-'
 
 # Defaults
-options.format  ||= 'jpg'
-options.width   ||= 600
-options.height  ||= 600
-options.quality ||= 75
-options.javascript_delay ||= 200
+options['format']  ||= 'jpg'
+options['width']   ||= 600
+options['height']  ||= 600
+options['quality'] ||= 75
+options['javascript-delay'] ||= 200
 
 if options.help or system.args.length is 1
   console.log parser.help()
@@ -108,7 +108,7 @@ if options.help or system.args.length is 1
 
 page = require('webpage').create()
 
-page.viewportSize = { width: options.width, height: options.height}
+page.viewportSize = { width: options['width'], height: options['height']}
 # page.paperSize = { width: size[0], height: size[1], border: '0px' }
 # page.paperSize = { format: system.args[3], orientation: 'portrait', border: '1cm' }
 
@@ -120,4 +120,4 @@ else
       console.log 'Unable to load the address!'
       phantom.exit()
 
-window.setTimeout (-> (page.render output, { format: options.format, quality: options.quality }; phantom.exit())), options.javascript_delay
+window.setTimeout (-> (page.render output, { format: options['format'], quality: options['quality'] }; phantom.exit())), options['javascript-delay']
