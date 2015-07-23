@@ -82,7 +82,7 @@ switches = [
   [      '--zoom [FLOAT]',                   'Use this zoom factor (default 1)']
 ]
 
-optparse = require ':/coffee-script/lib/coffee-script/optparse'
+optparse = require './lib/optparse'
 parser  = new optparse.OptionParser switches, helpBanner
 
 fs = require 'fs'
