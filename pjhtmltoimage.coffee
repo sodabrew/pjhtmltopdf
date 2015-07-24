@@ -101,6 +101,10 @@ options['width']   ||= 600
 options['height']  ||= 600
 options['quality'] ||= 75
 options['javascript-delay'] ||= 200
+options['crop-h']  ||= options['height']
+options['crop-w']  ||= options['width']
+options['crop-x']  ||= 0
+options['crop-y']  ||= 0
 
 if options.help or system.args.length is 1
   console.log parser.help()
@@ -108,7 +112,17 @@ if options.help or system.args.length is 1
 
 page = require('webpage').create()
 
-page.viewportSize = { width: options['width'], height: options['height']}
+page.viewportSize = {
+  width: options['width'],
+  height: options['height']
+}
+
+page.clipRect = {
+  top: options['crop-y'],
+  left: options['crop-x'],
+  width: options['crop-w'],
+  height: options['crop-h']
+}
 # page.paperSize = { width: size[0], height: size[1], border: '0px' }
 # page.paperSize = { format: system.args[3], orientation: 'portrait', border: '1cm' }
 
