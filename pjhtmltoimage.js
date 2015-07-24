@@ -34,6 +34,14 @@
 
   options['javascript-delay'] || (options['javascript-delay'] = 200);
 
+  options['crop-h'] || (options['crop-h'] = options['height']);
+
+  options['crop-w'] || (options['crop-w'] = options['width']);
+
+  options['crop-x'] || (options['crop-x'] = 0);
+
+  options['crop-y'] || (options['crop-y'] = 0);
+
   if (options.help || system.args.length === 1) {
     console.log(parser.help());
     phantom.exit(1);
@@ -44,6 +52,13 @@
   page.viewportSize = {
     width: options['width'],
     height: options['height']
+  };
+
+  page.clipRect = {
+    top: options['crop-y'],
+    left: options['crop-x'],
+    width: options['crop-w'],
+    height: options['crop-h']
   };
 
   if (address === '-') {
